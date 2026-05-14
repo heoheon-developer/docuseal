@@ -31,6 +31,11 @@ class TemplatesController < ApplicationController
   def new; end
 
   def edit
+    if params[:embedded]
+      response.headers.delete('X-Frame-Options')
+      response.headers['Content-Security-Policy'] = "frame-ancestors 'self' http://localhost:3002 http://localhost:3000"
+    end
+
     ActiveRecord::Associations::Preloader.new(
       records: [@template],
       associations: [{ schema_documents: [:blob, { preview_images_attachments: :blob }] }]

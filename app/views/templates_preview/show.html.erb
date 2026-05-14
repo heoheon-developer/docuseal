@@ -1,1 +1,10 @@
-<template-builder class="grid" data-editable="false" data-with-sign-yourself-button="<%= !@template.archived_at? %>" data-with-send-button="<%= !@template.archived_at? && can?(:create, @template.submissions.new(account: current_account)) %>" data-template="<%= @template_data %>"></template-builder>
+<template-builder 
+  class="grid" 
+  data-editable="false" 
+  data-with-sign-yourself-button="<%= !@template.archived_at? && params[:hide_buttons] != 'true' && params[:hide_header] != 'true' %>" 
+  data-with-send-button="<%= !@template.archived_at? && can?(:create, @template.submissions.new(account: current_account)) && params[:hide_buttons] != 'true' && params[:hide_header] != 'true' %>" 
+  data-with-title="<%= params[:hide_header] != 'true' %>"
+  data-with-logo="<%= params[:hide_header] != 'true' %>"
+  data-with-back-button="<%= params[:hide_header] != 'true' && params[:hide_buttons] != 'true' %>"
+  data-template="<%= @template_data %>"
+></template-builder>

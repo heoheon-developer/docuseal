@@ -127,6 +127,8 @@ class ApplicationController < ActionController::Base
     redirect_to request.url.gsub('.co/', '.com/'), allow_other_host: true, status: :moved_permanently
   end
 
+  before_action :set_frame_options
+
   def set_csp
     request.content_security_policy = current_content_security_policy.tap do |policy|
       policy.default_src :self
@@ -141,6 +143,17 @@ class ApplicationController < ActionController::Base
       policy.connect_src :self
 
       policy.directives['connect-src'] << 'ws:' if Rails.env.development?
+      
+      if params[:embedded]
+        policy.directives.delete('frame-ancestors')
+        policy.frame_ancestors :self, 'http://localhost:3002', 'http://localhost:3000'
+      end
+    end
+  end
+
+  def set_frame_options
+    if params[:embedded]
+      response.headers.delete('X-Frame-Options')
     end
   end
 end

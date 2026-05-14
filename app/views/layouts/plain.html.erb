@@ -11,6 +11,12 @@
       <%= javascript_pack_tag 'application', defer: true %>
     <% end %>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
+    <% if params[:hide_header] == 'true' %>
+      <style>
+        #title_container, .title-container, .base-button, .btn-primary, .white-button { display: none !important; }
+        .main-container { max-height: 100% !important; height: 100% !important; }
+      </style>
+    <% end %>
   </head>
   <body>
     <% if flash.present? %><%= render 'shared/flash' %><% end %>

@@ -241,7 +241,7 @@
             </div>
           </span>
           <a
-            v-else
+            v-else-if="withBackButton"
             :href="`/templates/${template.id}`"
             class="base-button"
           >
@@ -892,6 +892,11 @@ export default {
       default: true
     },
     withTitle: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    withBackButton: {
       type: Boolean,
       required: false,
       default: true

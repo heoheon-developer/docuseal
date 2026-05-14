@@ -18,6 +18,7 @@ Bundler.require(*Rails.groups)
 module DocuSeal
   class Application < Rails::Application
     config.load_defaults 8.1
+    config.action_dispatch.default_headers.delete('X-Frame-Options')
 
     config.autoload_lib(ignore: %w[assets tasks puma])
 
